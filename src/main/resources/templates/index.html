@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http:://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Boot 2 showcase</title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+
+<h1>Spring Boot 2 showcase</h1>
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Image</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="image: ${images}">
+            <td th:text="${image.id}"></td>
+            <td th:text="${image.name}"></td>
+            <td>
+                <a th:href="@{'/backend/images/' + ${image.name} + '/raw'}">
+                    <img th:src="@{'/backend/images/' + ${image.name} + '/raw'}" class="thumbnail">
+                </a>
+            </td>
+            <td>
+                <form th:method="delete" th:action="@{'/backend/images/' + ${image.name}}">
+                    <input type="submit" value="Delete"/>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <form method="post" enctype="multipart/form-data" action="/backend/images">
+        <p><input type="file" name="files"/></p>
+        <p><input type="submit" name="Upload"/></p>
+    </form>
+</div>
+</body>
+</html>
